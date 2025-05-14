@@ -1,0 +1,98 @@
+<%- include('../partials/header', { title: title }) %>
+
+<div class="row mb-4">
+  <div class="col-md-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1><i class="fas fa-calendar-alt"></i> Scheduled Scans</h1>
+      <a href="/scheduler/new" class="btn btn-primary">
+        <i class="fas fa-plus"></i> New Scheduled Scan
+      </a>
+    </div>
+  </div>
+</div>
+
+<% if (scheduledScans.length === 0) { %>
+  <div class="alert alert-info">
+    <p>No scheduled scans found. Create a new scheduled scan to periodically check your certificates.</p>
+    <a href="/scheduler/new" class="btn btn-primary">Create Scheduled Scan</a>
+  </div>
+<% } else { %>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Name</th>
+          <th>Hosts</th>
+          <th>Ports</th>
+          <th>Frequency</th>
+          <th>Last Run</th>
+          <th>Next Run</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% scheduledScans.forEach(scan => { %>
+          <tr>
+            <td><%= scan.name %></td>
+            <td><%= scan.hosts_count %> hosts</td>
+            <td><%= scan.ports_count %> ports</td>
+            <td><%= scan.frequency_display %></td>
+            <td><%= scan.last_run %></td>
+            <td><%= scan.next_run %></td>
+            <td>
+              <span class="badge bg-<%= scan.active ? 'success' : 'secondary' %>">
+                <%= scan.active ? 'ACTIVE' : 'INACTIVE' %>
+              </span>
+            </td>
+            <td>
+              <div class="btn-group" role="group">
+                <a href="/scheduler/<%= scan.id %>/edit" class="btn btn-sm btn-warning">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <form action="/scheduler/<%= scan.id %>/run" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-sm btn-primary">
+                    <i class="fas fa-play"></i>
+                  </button>
+                </form>
+                <form action="/scheduler/<%= scan.id %>?_method=DELETE" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this scheduled scan?')">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header bg-info text-white">
+        <h5 class="card-title mb-0">Scheduled Scan Information</h5>
+      </div>
+      <div class="card-body">
+        <p>Schedule regular scans of your internal network SSL certificates to:</p>
+        <ul>
+          <li>Keep track of certificate expiration dates</li>
+          <li>Detect new certificates in your network</li>
+          <li>Monitor for expired or soon-to-expire certificates</li>
+          <li>Identify self-signed certificates</li>
+        </ul>
+        <p>Available frequencies:</p>
+        <ul>
+          <li><strong>Hourly</strong>: Run every hour</li>
+          <li><strong>Daily</strong>: Run once per day at midnight</li>
+          <li><strong>Weekly</strong>: Run once per week on Sunday</li>
+          <li><strong>Monthly</strong>: Run once per month on the 1st</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

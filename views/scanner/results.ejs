@@ -1,0 +1,123 @@
+<%- include('../partials/header', { title: title }) %>
+
+<div class="row mb-4">
+  <div class="col-md-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1><i class="fas fa-clipboard-list"></i> Scan Results</h1>
+      <div>
+        <a href="/scanner" class="btn btn-primary">
+          <i class="fas fa-search"></i> New Scan
+        </a>
+        <a href="/certificates" class="btn btn-secondary">
+          <i class="fas fa-certificate"></i> All Certificates
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header bg-info text-white">
+        <h5 class="card-title mb-0">Scan Summary</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="text-center">
+              <h5>Hosts</h5>
+              <p class="h3"><%= scanSummary.hosts %></p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="text-center">
+              <h5>Ports</h5>
+              <p class="h3"><%= scanSummary.ports %></p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="text-center">
+              <h5>Total</h5>
+              <p class="h3"><%= scanSummary.total %></p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="text-center">
+              <h5>Valid</h5>
+              <p class="h3 text-success"><%= scanSummary.valid %></p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="text-center">
+              <h5>Warning</h5>
+              <p class="h3 text-warning"><%= scanSummary.warning %></p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="text-center">
+              <h5>Expired</h5>
+              <p class="h3 text-danger"><%= scanSummary.expired %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if (results.length === 0) { %>
+  <div class="alert alert-warning">
+    <p>No results found. All hosts may be unreachable or not running SSL services on the specified ports.</p>
+  </div>
+<% } else { %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>Host</th>
+              <th>Port</th>
+              <th>Subject</th>
+              <th>Issuer</th>
+              <th>Expiration</th>
+              <th>Days Left</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% results.forEach(cert => { %>
+              <tr>
+                <td><%= cert.host %></td>
+                <td><%= cert.port %></td>
+                <% if (cert.status === 'error') { %>
+                  <td colspan="4" class="text-danger"><%= cert.error %></td>
+                  <td>
+                    <span class="badge bg-secondary">ERROR</span>
+                  </td>
+                <% } else { %>
+                  <td><%= cert.subject?.substring(0, 40) + (cert.subject?.length > 40 ? '...' : '') %></td>
+                  <td><%= cert.issuer?.substring(0, 40) + (cert.issuer?.length > 40 ? '...' : '') %></td>
+                  <td><%= cert.validTo || 'N/A' %></td>
+                  <td><%= (cert.daysRemaining !== undefined && cert.daysRemaining !== null) ? cert.daysRemaining : 'N/A' %></td>
+                  <td>
+                    <span class="badge bg-<%= 
+                      cert.status === 'valid' ? 'success' : 
+                      cert.status === 'warning' ? 'warning' : 
+                      cert.status === 'expired' ? 'danger' : 'secondary' 
+                    %>">
+                      <%= cert.status.toUpperCase() %>
+                    </span>
+                  </td>
+                <% } %>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% } %>
+
+<%- include('../partials/footer') %>

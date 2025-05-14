@@ -1,0 +1,66 @@
+# WINDSURF IDE DEVELOPMENT RULES
+
+## Code Style & Formatting
+- Use Prettier for consistent code formatting
+- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError)
+- Prefer named exports for components
+- Use functional and declarative programming patterns
+- Use ESLint with predefined rules to enforce code style
+- Implement peer code review practices
+
+## Project Structure & Architecture
+- Follow Next.js patterns and use the App Router
+- Correctly determine when to use server vs. client components
+- Adopt Feature-First folder structure
+- Implement Domain-Driven Design for larger projects
+- Use Storybook for component documentation and development
+
+## Styling & UI
+- Use Tailwind CSS for styling
+- Use Shadcn UI for components
+- Implement responsive design with Flexbox
+- Ensure high accessibility (a11y) standards
+
+## Data Fetching & Forms
+- Use TanStack Query for frontend data fetching
+- Use React Hook Form for form handling
+
+## Authentication & Security
+- Implement Clerk for authentication and user management
+- Follow OWASP Top 10 security practices:
+  - Protection against injections (SQL, NoSQL, JS)
+  - Input sanitization for XSS prevention
+  - Proper CORS implementation
+  - CSRF protection with tokens
+- Perform code security scans using integrated tools
+- Use dependabot or similar for vulnerability scanning
+
+## State Management
+- Use React Context for basic state management
+- Consider Zustand or Jotai for complex state requirements
+
+## Database & Backend
+- For complex projects: Use MongoDB with Mongoose
+- For simple applications: Use SQLite with Drizzle ORM, Supabase, or PlanetScale
+- Leverage built-in IDE integrations for cloud database connections
+
+## TypeScript
+- Use TypeScript for all code with strict mode enabled
+- Choose types or interfaces based on specific needs
+
+## Performance
+- Implement lazy loading for components and pages
+- Use React.memo, useCallback, and useMemo strategically
+- Optimize images using next/image or similar libraries
+
+## Testing
+- Write unit tests with Jest and React Testing Library
+- Implement E2E tests with Cypress or Playwright
+- Use Vitest for faster testing
+
+## Development Workflow & Deployment
+- Utilize IDE's built-in Git/GitHub integration features for version control
+- Leverage GitHub's Model, Controller, Presenter (MCP) pattern for project organization
+- Configure local development server deployment
+- Set up simple deployment pipeline for local server testing
+- Create standardized deployment scripts for consistent environments

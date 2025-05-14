@@ -1,0 +1,129 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  padding-bottom: 70px;
+}
+
+/* Navbar styling */
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* Card styling */
+.card {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.card-header {
+  font-weight: bold;
+}
+
+/* Table styling */
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table th {
+  background-color: #212529;
+  color: white;
+}
+
+/* Badge styling for certificate status */
+.badge {
+  font-size: 0.85em;
+  padding: 0.4em 0.6em;
+}
+
+/* Footer styling */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-top: 1px solid #e9ecef;
+}
+
+/* Certificate details styling */
+.certificate-details {
+  line-height: 1.8;
+}
+
+/* Form styling */
+textarea {
+  font-family: monospace;
+}
+
+/* Stats cards */
+.stats-card {
+  text-align: center;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Certificate expiration warning colors */
+.days-remaining-warning {
+  color: #ffc107;
+  font-weight: bold;
+}
+
+.days-remaining-danger {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+/* Button spacing in tables */
+.btn-group .btn {
+  margin-right: 2px;
+}
+
+/* Code formatting */
+code {
+  word-break: break-all;
+  background-color: #f8f9fa;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #e9ecef;
+  overflow-x: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.9em;
+  }
+  
+  .btn-sm {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.75rem;
+  }
+}

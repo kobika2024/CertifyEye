@@ -1,0 +1,112 @@
+<%- include('../partials/header', { title: title }) %>
+
+<div class="row mb-4">
+  <div class="col-md-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1><i class="fas fa-certificate"></i> Certificate Details</h1>
+      <div>
+        <a href="/certificates" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i> Back to List
+        </a>
+        <form action="/certificates/<%= certificate.id %>?_method=DELETE" method="POST" class="d-inline">
+          <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this certificate?')">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header bg-<%= certificate.statusClass %>">
+        <h5 class="card-title text-white mb-0">
+          <%= certificate.host %>:<%= certificate.port %> 
+          <span class="badge bg-light text-dark float-end">
+            Status: <%= certificate.status.toUpperCase() %>
+          </span>
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h5>General Information</h5>
+            <table class="table table-sm table-bordered">
+              <tr>
+                <th>Host</th>
+                <td><%= certificate.host %></td>
+              </tr>
+              <tr>
+                <th>Port</th>
+                <td><%= certificate.port %></td>
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td>
+                  <span class="badge bg-<%= certificate.statusClass %>">
+                    <%= certificate.status.toUpperCase() %>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <th>Days Remaining</th>
+                <td><%= certificate.days_remaining %></td>
+              </tr>
+              <tr>
+                <th>Self-Signed</th>
+                <td><%= certificate.self_signed %></td>
+              </tr>
+              <tr>
+                <th>Last Scanned</th>
+                <td><%= certificate.last_scanned %></td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-md-6">
+            <h5>Validity Period</h5>
+            <table class="table table-sm table-bordered">
+              <tr>
+                <th>Valid From</th>
+                <td><%= certificate.valid_from %></td>
+              </tr>
+              <tr>
+                <th>Valid To</th>
+                <td><%= certificate.valid_to %></td>
+              </tr>
+            </table>
+            
+            <h5 class="mt-4">Technical Details</h5>
+            <table class="table table-sm table-bordered">
+              <tr>
+                <th>Signature Algorithm</th>
+                <td><%= certificate.signature_algorithm %></td>
+              </tr>
+              <tr>
+                <th>Fingerprint (SHA-256)</th>
+                <td><code><%= certificate.fingerprint %></code></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-md-12">
+            <h5>Subject</h5>
+            <div class="p-3 bg-light rounded">
+              <code><%= certificate.subject %></code>
+            </div>
+            
+            <h5 class="mt-4">Issuer</h5>
+            <div class="p-3 bg-light rounded">
+              <code><%= certificate.issuer %></code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,106 @@
+<%- include('../partials/header', { title: title }) %>
+
+<div class="row mb-4">
+  <div class="col-md-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1><i class="fas fa-certificate"></i> SSL Certificates</h1>
+      <a href="/scanner" class="btn btn-primary">
+        <i class="fas fa-search"></i> Scan Certificates
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-md-3">
+    <div class="card text-white bg-primary mb-3">
+      <div class="card-header">Total Certificates</div>
+      <div class="card-body">
+        <h5 class="card-title"><%= stats.total %></h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-white bg-success mb-3">
+      <div class="card-header">Valid</div>
+      <div class="card-body">
+        <h5 class="card-title"><%= stats.valid %></h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-white bg-warning mb-3">
+      <div class="card-header">Warning</div>
+      <div class="card-body">
+        <h5 class="card-title"><%= stats.warning %></h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-white bg-danger mb-3">
+      <div class="card-header">Expired</div>
+      <div class="card-body">
+        <h5 class="card-title"><%= stats.expired %></h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if (certificates.length === 0) { %>
+  <div class="alert alert-info">
+    <p>No certificates found. Use the scanner to add certificates.</p>
+    <a href="/scanner" class="btn btn-primary">Go to Scanner</a>
+  </div>
+<% } else { %>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Host</th>
+          <th>Port</th>
+          <th>Subject</th>
+          <th>Issuer</th>
+          <th>Expires</th>
+          <th>Days Left</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% certificates.forEach(cert => { %>
+          <tr>
+            <td><%= cert.host %></td>
+            <td><%= cert.port %></td>
+            <td><%= cert.subject?.substring(0, 40) + (cert.subject?.length > 40 ? '...' : '') %></td>
+            <td><%= cert.issuer?.substring(0, 40) + (cert.issuer?.length > 40 ? '...' : '') %></td>
+            <td><%= cert.valid_to %></td>
+            <td>
+              <% if (cert.days_remaining !== null) { %>
+                <%= cert.days_remaining %>
+              <% } else { %>
+                N/A
+              <% } %>
+            </td>
+            <td>
+              <span class="badge bg-<%= cert.statusClass %>">
+                <%= cert.status.toUpperCase() %>
+              </span>
+            </td>
+            <td>
+              <a href="/certificates/<%= cert.id %>" class="btn btn-sm btn-info">
+                <i class="fas fa-info-circle"></i>
+              </a>
+              <form action="/certificates/<%= cert.id %>?_method=DELETE" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this certificate?')">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include('../partials/footer') %>

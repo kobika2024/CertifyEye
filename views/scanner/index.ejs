@@ -1,0 +1,64 @@
+<%- include('../partials/header', { title: title }) %>
+
+<div class="row mb-4">
+  <div class="col-md-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1><i class="fas fa-search"></i> SSL Certificate Scanner</h1>
+      <a href="/certificates" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Back to Certificates
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h5 class="card-title mb-0">Scan Hosts for SSL Certificates</h5>
+      </div>
+      <div class="card-body">
+        <form action="/scanner" method="POST">
+          <div class="mb-3">
+            <label for="hosts" class="form-label">Host(s) to Scan</label>
+            <textarea class="form-control" id="hosts" name="hosts" rows="5" placeholder="Enter hostnames or IP addresses (one per line, or comma-separated)" required><%= formData.hosts %></textarea>
+            <div class="form-text">Enter multiple hosts separated by commas, semicolons, or newlines</div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="ports" class="form-label">Port(s) to Scan</label>
+            <input type="text" class="form-control" id="ports" name="ports" placeholder="443, 8443" value="<%= formData.ports %>" required>
+            <div class="form-text">Enter ports separated by commas (e.g., 443, 8443, 4443)</div>
+          </div>
+          
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-search"></i> Start Scanning
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header bg-info text-white">
+        <h5 class="card-title mb-0">Scanner Tips</h5>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>For internal networks, make sure the hosts are reachable from this server</li>
+          <li>You can scan multiple ports per host to identify all SSL services</li>
+          <li>Common SSL ports include 443 (HTTPS), 8443, 9443, 4443, 8444, and 8843</li>
+          <li>For scanning a single host quickly, use the <a href="/scanner/quick">Quick Scan</a> feature</li>
+          <li>To schedule regular scans, visit the <a href="/scheduler">Scheduled Scans</a> page</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
